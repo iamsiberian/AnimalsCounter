@@ -1,6 +1,5 @@
 package com.example.animalregistration.processors;
 
-import com.example.animalregistration.domain.Animal;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.function.Predicate;
 
 @RequiredArgsConstructor
 public class AnimalCountProcessor {
-    public static void processAnimals(List<Animal> animals, List<Map<String, Predicate<Animal>>> rules) {
+    public static void processAnimals(List<String[]> animals, List<Map<String, Predicate<String[]>>> rules) {
         rules.parallelStream().forEach(
                 rulesMap -> {
                     long count = animals.parallelStream().filter(

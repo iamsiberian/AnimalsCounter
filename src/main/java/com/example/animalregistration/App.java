@@ -1,6 +1,5 @@
 package com.example.animalregistration;
 
-import com.example.animalregistration.domain.Animal;
 import com.example.animalregistration.processors.AnimalCountProcessor;
 import com.example.animalregistration.readers.AnimalsReader;
 import com.example.animalregistration.readers.RulesReader;
@@ -18,8 +17,8 @@ public class App {
     private static final int ARG_LENGTH = 2;
 
     public static void main(String[] args) throws AppException {
-        List<Animal> animals;
-        List<Map<String, Predicate<Animal>>> rules;
+        List<String[]> animals;
+        List<Map<String, Predicate<String[]>>> rules;
 
         if (args.length == ARG_LENGTH) {
             try (
