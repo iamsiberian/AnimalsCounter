@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 
 public class App {
     private static final int ARG_LENGTH = 2;
+    private static final AnimalCountProcessor animalCountProcessor = new AnimalCountProcessor();
 
     public static void main(String[] args) throws AppException {
         List<String[]> animals;
@@ -33,7 +34,8 @@ public class App {
             } catch (IOException e) {
                 throw new AppException("Error while reading files: ", e);
             }
-            AnimalCountProcessor.processAnimals(animals, rules);
+            List<String> answers = animalCountProcessor.processAnimals(animals, rules);
+            System.out.println(answers);
         } else {
             System.err.println("Usage: java -jar *.jar animals.file rules.file");
             System.exit(1);

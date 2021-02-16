@@ -23,13 +23,19 @@ public class RulesReader {
     public List<Map<String, Predicate<String[]>>> readRules() throws IOException {
         List<Map<String, Predicate<String[]>>> rules = new ArrayList<>();
         while (rulesBufferedReader.ready()) {
-            Map<String, Predicate<String[]>> rulesMap = new HashMap<>();
-            for (String rule : rulesBufferedReader.readLine().split(DELIMITER)) {
-                rulesMap.put(rule, createRule(rule));
-            }
-            rules.add(rulesMap);
+            Map<String, Predicate<String[]>> rulesGroup = createRuleGroup(rulesBufferedReader.readLine().split(DELIMITER));
+            rules.add(rulesGroup);
         }
         return rules;
+    }
+
+    public Map<String, Predicate<String[]>> createRuleGroup(String[] rulesFromExternalFile) {
+        Map<String, Predicate<String[]>> rulesGroup = new HashMap<>();
+        for (String rule : rulesFromExternalFile) {
+            rulesGroup.put(rule, createRule(rule));
+        }
+
+        return rulesGroup;
     }
 
     private Predicate<String[]> createRule(String ruleGroup) {
@@ -45,7 +51,7 @@ public class RulesReader {
 
     private Predicate<String[]> createSingleRule(String rule) {
         return isContainsInverting(rule)
-                ? createNotPredicate(rule)
+                ? createNegatePredicate(rule)
                 : createPredicate(rule);
     }
 
@@ -60,7 +66,7 @@ public class RulesReader {
         };
     }
 
-    private Predicate<String[]> createNotPredicate(String rule) {
+    private Predicate<String[]> createNegatePredicate(String rule) {
         return createPredicate(rule.replace(NOT, EMPTY)).negate();
     }
 
