@@ -104,7 +104,6 @@ class AnimalCountProcessorTest {
     @Test
     void testProcessAnimals() {
         List<String> answers = animalCountProcessor.processAnimals(animals, rules);
-        String asd = ANSWER_1;
         assertEquals(3, answers.size());
         assertTrue(answers.contains(ANSWER_1));
         assertTrue(answers.contains(ANSWER_2));

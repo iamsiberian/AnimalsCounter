@@ -23,10 +23,10 @@ class RulesReaderTest {
     private static final String HERBIVOROUS_RULE = "ТРАВОЯДНОЕ";
     private static final String OMNIVOROUS_RULE = "ВСЕЯДНОЕ";
     private static final String CARNIVOROUS_RULE = "ПЛОТОЯДНОЕ";
+    private static final String SMALL_RULE = "МАЛЕНЬКОЕ";
 
     private RulesReader rulesReader;
     private BufferedReader bufferedReader;
-    public static final String SMALL_RULE = "МАЛЕНЬКОЕ";
 
     @BeforeEach
     void setUp() {
@@ -60,7 +60,7 @@ class RulesReaderTest {
         assertEquals(1, actualRuleGroup.size());
         assertTrue(actualRuleGroup.get(0).containsKey(OMNIVOROUS_RULE));
         Predicate<String[]> actualPredicate = actualRuleGroup.get(0).get(OMNIVOROUS_RULE);
-        assertTrue(actualPredicate.test(new String[]{OMNIVOROUS_RULE, SOMETHING_RULE }));
+        assertTrue(actualPredicate.test(new String[]{ OMNIVOROUS_RULE, SOMETHING_RULE }));
         assertFalse(actualPredicate.test(new String[]{ SOMETHING_RULE, SOMETHING_RULE }));
     }
 
@@ -99,7 +99,7 @@ class RulesReaderTest {
         assertTrue(actualFirstPredicate.test(new String[]{ SOMETHING_RULE, SOMETHING_RULE }));
         assertTrue(actualRuleGroup.get(0).containsKey(SMALL_RULE));
         Predicate<String[]> secondPredicate = actualRuleGroup.get(0).get(SMALL_RULE);
-        assertTrue(secondPredicate.test(new String[]{SMALL_RULE, SOMETHING_RULE }));
+        assertTrue(secondPredicate.test(new String[]{ SMALL_RULE, SOMETHING_RULE }));
         assertFalse(secondPredicate.test(new String[]{ SOMETHING_RULE, SOMETHING_RULE }));
     }
 }
