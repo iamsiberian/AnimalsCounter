@@ -1,6 +1,6 @@
 package com.example.animalregistration;
 
-public class AppException extends Exception {
+public class AppException extends RuntimeException {
     public AppException(final String message) {
         super(message);
     }
