@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -21,6 +23,7 @@ public class App {
     private static final AnimalCountProcessor animalCountProcessor = new AnimalCountProcessor();
 
     public static void main(String[] args) throws AppException {
+        System.out.println("App started at: " + Instant.now().toString());
         List<Map<String, Predicate<String[]>>> rules;
 
         if (args.length == ARG_LENGTH) {
@@ -45,12 +48,27 @@ public class App {
                     throw new AppException("Error while obtain animal stream: ", e);
                 }
             };
+            System.out.println("Prepare processing ended at: " + Instant.now().toString());
+            final Instant processingStarted = Instant.now();
+            System.out.println("Processing started at: " + processingStarted);
             List<String> answers = animalCountProcessor.processAnimals(animalsStreamSupplier, rules);
+            final Instant processingEnded = Instant.now();
+            System.out.println("Processing ended at: " + processingEnded);
+            Duration duration = Duration.between(processingStarted, processingEnded);
+            System.out.printf("""
+                                        
+                    Total processing time:
+                    Seconds: %d
+                    Millis: %d
+                                        
+                    %n""", duration.toSeconds(), duration.toMillis());
+
             System.out.println(answers);
 
         } else {
             System.err.println("Usage: java -jar *.jar animals.file rules.file");
             System.exit(1);
         }
+        System.out.println("App ended at: " + Instant.now().toString());
     }
 }
